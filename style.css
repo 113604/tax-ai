@@ -439,112 +439,81 @@
     max-height: 260px;
   }
 }
+/* ===== TAX MELODY 嵌入頁面 ===== */
 
-/* =========================
-   學習中心｜一日美化版
-========================= */
-.featured-learning{
-  padding:36px;
-  background:linear-gradient(135deg,#fff 0%,#f7fbff 55%,#eaf5fd 100%);
-  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
-}
-.featured-learning:hover{box-shadow:0 22px 55px rgba(18,52,77,.13);border-color:#bad9ee}
-.featured-learning-layout{grid-template-columns:minmax(0,1fr) minmax(360px,.92fr);gap:38px}
-.featured-learning-label{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#fff;color:var(--blue);border:1px solid #d7e9f6;box-shadow:0 5px 16px rgba(15,108,189,.08)}
-.featured-learning h3{font-size:34px;line-height:1.35;margin:18px 0 13px}
-.featured-learning-summary{font-size:15px;line-height:1.9;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
-.featured-learning-meta{margin-top:20px}
-.learning-start-btn{display:inline-flex;align-items:center;gap:11px;margin-top:22px;padding:12px 19px;border-radius:12px;box-shadow:0 9px 20px rgba(15,108,189,.18);transition:.22s ease}
-.learning-start-btn:hover{transform:translateY(-2px);box-shadow:0 13px 28px rgba(15,108,189,.24)}
-.learning-start-btn span{transition:transform .22s ease}.learning-start-btn:hover span{transform:translateX(4px)}
-.featured-learning-visual{aspect-ratio:1/1;min-height:0;cursor:pointer;background:#fff;box-shadow:0 18px 40px rgba(27,75,107,.13);transition:transform .28s ease,box-shadow .28s ease}
-.featured-learning-visual:hover{transform:translateY(-5px);box-shadow:0 24px 50px rgba(27,75,107,.18)}
-.featured-learning-visual img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}.featured-learning-visual:hover img{transform:scale(1.025)}
-.featured-learning-visual>span{display:flex;align-items:center;gap:6px}.featured-learning-visual>span b{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--blue);color:#fff;font-size:10px}
-.featured-image-hint{position:absolute;left:50%;bottom:18px;transform:translate(-50%,10px);padding:9px 14px;border-radius:999px;background:rgba(23,43,60,.82);color:#fff;font-size:12px;opacity:0;transition:.25s;backdrop-filter:blur(5px)}
-.featured-learning-visual:hover .featured-image-hint{opacity:1;transform:translate(-50%,0)}
-
-.learning-topic-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.learning-news-item{display:block;padding:0;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:0 7px 20px rgba(21,55,80,.05);transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease}
-.learning-news-item:hover{transform:translateY(-5px);box-shadow:0 17px 36px rgba(21,55,80,.12);border-color:#bddbef}
-.learning-news-thumb{position:relative;aspect-ratio:16/10;overflow:hidden;background:#eef6fc}
-.learning-news-thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}.learning-news-item:hover .learning-news-thumb img{transform:scale(1.04)}
-.learning-news-thumb span{position:absolute;left:12px;top:12px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.9);color:var(--blue);font-size:11px;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.learning-news-thumb-empty{display:grid;place-items:center;color:#7ba7c8;font-weight:800;letter-spacing:.14em}
-.learning-news-body{padding:16px 17px 17px}.learning-news-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
-.learning-news-main strong{font-size:17px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.learning-news-main small{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-top:7px;min-height:64px}
-.learning-card-link{display:inline-block;margin-top:15px;color:var(--blue);font-size:13px;font-weight:800}
-
-.learning-points-card{background:linear-gradient(145deg,#fff,#f8fbfd)}
-.learning-article-points{gap:12px}.learning-point-item{display:grid;grid-template-columns:44px 1fr;gap:13px;padding:15px;border:1px solid #dbe8f2;border-radius:14px;background:#fff}
-.learning-point-number{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:#edf6fc;color:var(--blue);font-weight:900;font-size:13px}
-.learning-point-item strong{display:block;margin:1px 0 5px;font-size:15px}.learning-point-item p{padding:0;border:0;background:transparent;color:#526170;line-height:1.75}
-.learning-zoomable-image{cursor:zoom-in;transition:transform .25s ease}.learning-zoomable-image:hover{transform:scale(1.012)}
-.learning-zoom-hint{text-align:center;padding:8px 12px;background:#f5f9fc;color:#738596;font-size:12px}
-.learning-lightbox{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:28px;background:rgba(8,20,30,.82);opacity:0;visibility:hidden;transition:.22s}
-.learning-lightbox.open{opacity:1;visibility:visible}.learning-lightbox img{max-width:min(1050px,92vw);max-height:88vh;border-radius:16px;background:#fff;box-shadow:0 30px 90px rgba(0,0,0,.4)}
-.learning-lightbox button{position:fixed;right:24px;top:20px;width:44px;height:44px;border:1px solid rgba(255,255,255,.45);border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:28px;cursor:pointer}
-
-@media(max-width:1050px){.learning-topic-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.featured-learning-layout{grid-template-columns:1fr 380px}}
-@media(max-width:820px){.featured-learning-layout{grid-template-columns:1fr}.featured-learning-visual{max-width:520px;margin:auto}.learning-topic-cards{grid-template-columns:1fr 1fr}}
-@media(max-width:620px){.featured-learning{padding:23px 19px}.featured-learning h3{font-size:26px}.learning-topic-cards{grid-template-columns:1fr}.learning-news-main small{min-height:auto}.featured-image-hint{display:none}.learning-point-item{grid-template-columns:38px 1fr}.learning-point-number{width:36px;height:36px}}
-
-/* ==================================================
-   學習中心圖片自動比例修正版
-   圖片會依原始比例自動撐高，不裁切
-================================================== */
-
-/* 今日推薦主圖：取消固定正方形，依圖片本身比例顯示 */
-.featured-learning-visual{
-  aspect-ratio: auto !important;
-  min-height: 0 !important;
-  overflow: hidden;
+.tax-melody-page {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  background: #ffffff;
 }
 
-.featured-learning-visual img{
-  position: static !important;
-  inset: auto !important;
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  background: #fff;
+.tax-melody-page.show {
+  display: block;
 }
 
-/* 最新學習主題縮圖：完整顯示，不裁切 */
-.learning-news-thumb img{
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-  object-position: center !important;
-  background: #fff;
+.tax-melody-page iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #ffffff;
 }
 
-/* 文章內 AI 圖片：維持原始比例完整顯示 */
-.learning-figure img{
-  width: 100% !important;
-  height: auto !important;
-  max-height: none !important;
-  object-fit: contain !important;
-  object-position: center !important;
+.tax-melody-back {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 1000000;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* TAX MELODY 左側入口 */
+.tax-melody-entry {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  color: #526170;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-weight: 600;
 }
 
-/* 手機版也依圖片比例顯示 */
-@media(max-width:720px){
-  .featured-learning-visual{
-    min-height: 0 !important;
+.tax-melody-entry:hover {
+  background: #f4f8fb;
+  color: var(--blue);
+}
+
+@media (max-width: 1050px) {
+  .tax-melody-entry {
+    justify-content: center;
   }
 
-  .featured-learning-visual img{
-    height: auto !important;
-    min-height: 0 !important;
+  .tax-melody-entry span {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .tax-melody-entry {
+    justify-content: flex-start;
   }
 
-  .learning-figure img{
-    max-height: none !important;
+  .tax-melody-entry span {
+    display: block;
   }
 }
