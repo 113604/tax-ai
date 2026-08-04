@@ -284,165 +284,73 @@ async function loadLearningCenter() {
 }
 
 function renderLearningCenter(data) {
-  const featuredContainer =
-    document.querySelector("#featuredLearning");
-
-  const newsContainer =
-    document.querySelector("#learningNews");
-
-  if (!featuredContainer || !newsContainer) {
-    return;
-  }
+  const featuredContainer = document.querySelector("#featuredLearning");
+  const newsContainer = document.querySelector("#learningNews");
+  if (!featuredContainer || !newsContainer) return;
 
   const featured = data?.featured || {};
-  const news = Array.isArray(data?.news)
-    ? data.news
-    : [];
+  const news = Array.isArray(data?.news) ? data.news : [];
 
-  const featuredImage = featured.image
-    ? `
-      <div class="featured-learning-visual">
-        <img
-          src="${escapeLearningHtml(featured.image)}"
-          alt="${escapeLearningHtml(featured.imageAlt || featured.title || "學習主題圖解")}"
-          loading="lazy"
-        >
-        <span>AI 視覺圖解</span>
-      </div>
-    `
-    : "";
+  const featuredCover = featured.thumbnail || featured.image;
+  const featuredImage = featuredCover ? `
+    <div class="featured-learning-visual" data-learning-featured role="button" tabindex="0" aria-label="閱讀${escapeLearningHtml(featured.title || "今日推薦")}">
+      <img src="${escapeLearningHtml(featuredCover)}" alt="${escapeLearningHtml(featured.imageAlt || featured.title || "學習主題圖解")}" loading="lazy">
+      <span><b>AI</b> 視覺圖解</span>
+      <div class="featured-image-hint">查看完整內容 →</div>
+    </div>` : "";
 
   featuredContainer.innerHTML = `
     <div class="featured-learning-layout">
       <div class="featured-learning-content">
-        <div class="featured-learning-label">
-          ✦ 今日推薦學習
-        </div>
-
-        <h3>
-          ${escapeLearningHtml(
-            featured.title || "今日稅務新知"
-          )}
-        </h3>
-
-        <p class="featured-learning-summary">
-          ${escapeLearningHtml(
-            featured.summary || "快速掌握重要稅務資訊。"
-          )}
-        </p>
-
+        <div class="featured-learning-label">✦ 今日推薦</div>
+        <h3>${escapeLearningHtml(featured.title || "今日稅務新知")}</h3>
+        <p class="featured-learning-summary">${escapeLearningHtml(featured.summary || "快速掌握重要稅務資訊。")}</p>
         <div class="featured-learning-meta">
-          <span>
-            ${escapeLearningHtml(
-              featured.category || "稅務新知"
-            )}
-          </span>
-
-          <span>
-            更新日期：
-            ${escapeLearningHtml(
-              featured.date || ""
-            )}
-          </span>
-
+          <span>${escapeLearningHtml(featured.category || "稅務新知")}</span>
+          <span>更新日期：${escapeLearningHtml(featured.date || "")}</span>
         </div>
-
-        <button
-          class="learning-start-btn"
-          type="button"
-          data-learning-featured
-        >
-          開始學習
+        <button class="learning-start-btn" type="button" data-learning-featured>
+          立即閱讀 <span aria-hidden="true">→</span>
         </button>
       </div>
-
       ${featuredImage}
-    </div>
-  `;
+    </div>`;
 
   if (!news.length) {
-    newsContainer.innerHTML = `
-      <div class="learning-loading">
-        目前尚無最新稅務新聞。
-      </div>
-    `;
+    newsContainer.innerHTML = `<div class="learning-loading">目前尚無最新學習主題。</div>`;
   } else {
-    newsContainer.innerHTML = news.map(
-      (item, index) => `
-        <article
-          class="learning-news-item"
-          data-learning-news="${index}"
-          tabindex="0"
-        >
-          <span class="learning-news-category">
-            ${escapeLearningHtml(
-              item.category || "新知"
-            )}
-          </span>
-
-          <div class="learning-news-main">
-            <strong>
-              ${escapeLearningHtml(
-                item.title || ""
-              )}
-            </strong>
-
-            <small>
-              ${escapeLearningHtml(
-                item.summary ||
-                "點擊查看本則稅務新聞重點。"
-              )}
-            </small>
+    newsContainer.innerHTML = `<div class="learning-topic-cards">${news.map((item, index) => `
+      <article class="learning-news-item" data-learning-news="${index}" tabindex="0">
+        ${(item.thumbnail || item.image) ? `<div class="learning-news-thumb"><img src="${escapeLearningHtml(item.thumbnail || item.image)}" alt="${escapeLearningHtml(item.title || "學習主題縮圖")}" loading="lazy"><span>主題縮圖</span></div>` : `<div class="learning-news-thumb learning-news-thumb-empty">TAX AI</div>`}
+        <div class="learning-news-body">
+          <div class="learning-news-topline">
+            <span class="learning-news-category">${escapeLearningHtml(item.category || "新知")}</span>
+            <span class="learning-news-date">${escapeLearningHtml(item.date || "")}</span>
           </div>
-
-          <span class="learning-news-date">
-            ${escapeLearningHtml(item.date || "")}
-          </span>
-        </article>
-      `
-    ).join("");
+          <div class="learning-news-main">
+            <strong>${escapeLearningHtml(item.title || "")}</strong>
+            <small>${escapeLearningHtml(item.summary || "點擊查看本則稅務新知重點。")}</small>
+          </div>
+          <span class="learning-card-link">查看內容 →</span>
+        </div>
+      </article>`).join("")}</div>`;
   }
 
-  const featuredButton =
-    featuredContainer.querySelector(
-      "[data-learning-featured]"
-    );
-
-  if (featuredButton) {
-    featuredButton.addEventListener("click", () => {
-      openLearningArticle(featured);
+  featuredContainer.querySelectorAll("[data-learning-featured]").forEach(el => {
+    const openFeatured = () => openLearningArticle(featured);
+    el.addEventListener("click", openFeatured);
+    el.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openFeatured(); }
     });
-  }
+  });
 
-  newsContainer
-    .querySelectorAll("[data-learning-news]")
-    .forEach(itemElement => {
-      const openItem = () => {
-        const index = Number(
-          itemElement.dataset.learningNews
-        );
-
-        openLearningArticle(news[index]);
-      };
-
-      itemElement.addEventListener(
-        "click",
-        openItem
-      );
-
-      itemElement.addEventListener(
-        "keydown",
-        event => {
-          if (
-            event.key === "Enter" ||
-            event.key === " "
-          ) {
-            event.preventDefault();
-            openItem();
-          }
-        }
-      );
+  newsContainer.querySelectorAll("[data-learning-news]").forEach(itemElement => {
+    const openItem = () => openLearningArticle(news[Number(itemElement.dataset.learningNews)]);
+    itemElement.addEventListener("click", openItem);
+    itemElement.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openItem(); }
     });
+  });
 }
 
 function openLearningArticle(article) {
@@ -455,30 +363,24 @@ function openLearningArticle(article) {
     : [];
 
   const contentHtml = content.length
-    ? `
-      <section class="detail-card ai">
-        <h4>✨ 學習重點</h4>
-
-        <div class="learning-article-points">
-          ${content.map(
-            item => `
-              <p>✓ ${escapeLearningHtml(item)}</p>
-            `
-          ).join("")}
+    ? `<section class="detail-card learning-points-card">
+        <div class="learning-card-heading">
+          <span class="learning-section-icon">✓</span>
+          <div><small>KEY TAKEAWAYS</small><h4>學習重點</h4></div>
         </div>
-      </section>
-    `
-    : `
-      <section class="detail-card ai">
-        <h4>✨ 重點整理</h4>
-        <p>
-          ${escapeLearningHtml(
-            article.summary ||
-            "目前尚未提供詳細學習內容。"
-          )}
-        </p>
-      </section>
-    `;
+        <div class="learning-article-points">
+          ${content.map((item, index) => {
+            const parts = String(item || "").split(/\r?\n/);
+            const heading = parts.shift() || `重點 ${index + 1}`;
+            const text = parts.join("\n");
+            return `<article class="learning-point-item">
+              <span class="learning-point-number">${String(index + 1).padStart(2, "0")}</span>
+              <div><strong>${escapeLearningHtml(heading.replace(/^重點[一二三四五六七八九十\d]+[：:]?\s*/, ""))}</strong>${text ? `<p>${escapeLearningHtml(text)}</p>` : ""}</div>
+            </article>`;
+          }).join("")}
+        </div>
+      </section>`
+    : `<section class="detail-card ai"><h4>✨ 重點整理</h4><p>${escapeLearningHtml(article.summary || "目前尚未提供詳細學習內容。")}</p></section>`;
 
   const visualHtml = article.image
     ? `
@@ -493,10 +395,12 @@ function openLearningArticle(article) {
 
         <figure class="learning-figure">
           <img
+            class="learning-zoomable-image"
             src="${escapeLearningHtml(article.image)}"
             alt="${escapeLearningHtml(article.imageAlt || article.title || "AI 視覺圖解")}"
             loading="lazy"
           >
+          <div class="learning-zoom-hint">點擊圖片放大查看</div>
           <figcaption>
             ${escapeLearningHtml(
               article.imageCaption ||
@@ -570,11 +474,28 @@ function openLearningArticle(article) {
     </p>
   `;
 
-  const drawer =
-    document.querySelector("#detailDrawer");
+  const zoomImage = drawerContent.querySelector(".learning-zoomable-image");
+  if (zoomImage) zoomImage.addEventListener("click", () => openLearningImage(zoomImage.src, zoomImage.alt));
 
+  const drawer = document.querySelector("#detailDrawer");
   drawer.classList.add("open");
   drawer.setAttribute("aria-hidden", "false");
+}
+
+function openLearningImage(src, alt) {
+  let lightbox = document.querySelector("#learningImageLightbox");
+  if (!lightbox) {
+    lightbox = document.createElement("div");
+    lightbox.id = "learningImageLightbox";
+    lightbox.className = "learning-lightbox";
+    lightbox.innerHTML = `<button type="button" aria-label="關閉圖片">×</button><img alt="">`;
+    document.body.appendChild(lightbox);
+    lightbox.addEventListener("click", event => { if (event.target === lightbox || event.target.tagName === "BUTTON") lightbox.classList.remove("open"); });
+  }
+  const image = lightbox.querySelector("img");
+  image.src = src;
+  image.alt = alt || "AI 視覺圖解";
+  lightbox.classList.add("open");
 }
 
 function escapeLearningHtml(value) {
@@ -584,23 +505,4 @@ function escapeLearningHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
-}
-function openTaxMelody() {
-  const page = document.getElementById("taxMelodyPage");
-  const frame = document.getElementById("taxMelodyFrame");
-
-  frame.src = "https://113604.github.io/tax-melody/";
-  page.classList.add("show");
-
-  document.body.style.overflow = "hidden";
-}
-
-function closeTaxMelody() {
-  const page = document.getElementById("taxMelodyPage");
-  const frame = document.getElementById("taxMelodyFrame");
-
-  page.classList.remove("show");
-  frame.src = "";
-
-  document.body.style.overflow = "";
 }

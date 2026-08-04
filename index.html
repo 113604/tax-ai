@@ -21,7 +21,7 @@
         <button class="nav-item" data-view="search">⌕<span>智慧搜尋</span></button>
         <button class="nav-item" data-view="learning">▤<span>學習中心</span></button>
         <button type="button" class="tax-melody-entry" onclick="openTaxMelody()">
-         🎵<span>節奏學稅</span>
+        🎵<span>節奏學稅</span>
         </button>
         <button class="nav-item" data-view="bank">▦<span>題庫瀏覽</span></button>
         <button class="nav-item" data-view="favorites">♡<span>我的收藏</span></button>
@@ -63,9 +63,9 @@
       <section id="learningView" class="view">
         <div class="section-heading compact learning-heading">
           <div>
-            <span>DAILY LEARNING</span>
+            <span>TAX AI LEARNING</span>
             <h2>學習中心</h2>
-            <p>用摘要、重點整理與 AI 圖解，快速掌握最新稅務政策。</p>
+            <p>用摘要、重點整理與 AI 圖解，掌握重要稅務新知。</p>
           </div>
         </div>
 
@@ -80,7 +80,7 @@
                 <span>LEARNING TOPICS</span>
                 <h3>最新學習主題</h3>
               </div>
-              <small>點選主題查看內容摘要、重點整理與 AI 圖解</small>
+              <small>本圖片以AI方式呈現</small>
             </div>
 
             <div id="learningNews">
@@ -119,34 +119,36 @@
   </div>
   <div id="toast" class="toast" role="status"></div>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <script src="questionBank.js?v=20260724"></script>
-  <script src="search.js?v=20260724"></script>
-  <script src="learningBank.js?v=20260724"></script>
-  <script src="app.js?v=20260724"></script>
+  <script src="questionBank.js?v=20260728"></script>
+  <script src="search.js?v=20260728"></script>
+  <script src="learningBank.js?v=20260728"></script>
+  <script src="app.js?v=20260728"></script>
+</body>
+<script src="app.js?v=20260728"></script>
+
 <!-- TAX MELODY 遊戲頁面 -->
 <div id="taxMelodyPage" class="tax-melody-page">
   <button class="tax-melody-back" onclick="closeTaxMelody()">
-    ← 回到 TAXAI
+    ← 回到 TAX AI
   </button>
 
- <iframe
-  id="taxMelodyFrame"
-  src="https://113604.github.io/tax-melody/"
-  title="TAX MELODY 地方稅節奏遊戲"
-  allow="autoplay"
-></iframe>
+  <iframe
+    id="taxMelodyFrame"
+    src="https://113604.github.io/tax-melody/"
+    title="TAX MELODY 地方稅節奏遊戲"
+    allow="autoplay"
+  ></iframe>
 </div>
+
 <script>
   function openTaxMelody() {
     const page = document.getElementById("taxMelodyPage");
-
     page.classList.add("show");
     document.body.style.overflow = "hidden";
   }
 
   function closeTaxMelody() {
     const page = document.getElementById("taxMelodyPage");
-
     page.classList.remove("show");
     document.body.style.overflow = "";
   }
